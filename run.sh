@@ -23,7 +23,7 @@ init(){
 		[ -f "$CA_CRT" ] || openssl req -days "$CERT_DAYS" -new -x509 -key "$CA_KEY" -out "$CA_CRT" \
 				-subj "$CA_SUBJECT" || return 1
 		OPTIONS_PORT="$OPTIONS_PORT ssl-bump generate-host-certificates=on cert=$CA_CRT key=$CA_KEY"
-	
+		OPTIONS_EXTRA="$OPTIONS_EXTRA"$'\n'"ssl_bump bump all"
 		OPTIONS_EXTRA="$OPTIONS_EXTRA"$'\n'"sslcrtd_children 1"
 		bool_flag "${PROXY_CERT_ERROR:-N}" && {
 			OPTIONS_EXTRA="$OPTIONS_EXTRA"$'\n'"sslproxy_cert_error allow all"
